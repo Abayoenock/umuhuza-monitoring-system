@@ -1,0 +1,17 @@
+.ActiveLink li {
+  @apply hover:bg-white text-black bg-white  pl-8 w-full before:absolute before:w-[16px] before:h-full before:bg-purple-950 before:left-0 before:top-0 before:rounded-none after:absolute after:w-[16px] after:h-[70%] after:top-0 after:left-0 after:rounded-none overflow-y-hidden;
+}
+.ActiveLink li::after {
+  animation: animateKay 3s ease-in-out infinite;
+}
+@keyframes animateKay {
+  0% {
+    @apply -top-full bg-white bg-opacity-20;
+  }
+  50% {
+    @apply top-full bg-white bg-opacity-20;
+  }
+  100% {
+    @apply -top-full bg-white bg-opacity-20;
+  }
+}
