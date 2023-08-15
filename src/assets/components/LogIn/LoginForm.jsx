@@ -37,7 +37,7 @@ function LoginForm({ activeTab }) {
         if (serverResponse.jwt != "") {
           if (activeTab == 1) {
             localStorage.setItem(
-              "iot-car-tracker",
+              "umuhuza-admin",
               JSON.stringify(serverResponse)
             )
           } else {
@@ -75,7 +75,6 @@ function LoginForm({ activeTab }) {
 
   return (
     <>
-      {activeTab}
       {serverResponse.login &&
         serverResponse.jwt != "" &&
         (activeTab == 1 ? (

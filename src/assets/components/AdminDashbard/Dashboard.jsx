@@ -34,7 +34,7 @@ function Dashboard() {
     checkToken()
   }
   const logOut = () => {
-    localStorage.removeItem("iot-car-tracker")
+    localStorage.removeItem("umuhuza-admin")
     window.location = "../"
   }
   useEffect(() => {
@@ -42,7 +42,7 @@ function Dashboard() {
   }, [])
 
   const checkToken = async () => {
-    const jwt = JSON.parse(localStorage.getItem("iot-car-tracker"))
+    const jwt = JSON.parse(localStorage.getItem("umuhuza-admin"))
 
     if (jwt) {
       setJwtExpires(jwt.expireAt)
