@@ -134,8 +134,7 @@ function Login() {
           <div className="flex items-center w-full max-w-md px-6  lg:w-[45%] overflow-y-hidden ">
             {/* login form */}
             <Routes>
-              <Route path="/" element={<LoginForm />} />
-              <Route path="/create-account" element={<RegisterUser />} />
+              <Route path="/" element={<LoginForm activeTab={activeTab} />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
             </Routes>
           </div>

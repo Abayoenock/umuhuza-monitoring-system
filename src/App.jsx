@@ -3,10 +3,11 @@ import React, { useEffect, useState } from "react"
 import { Routes, Route } from "react-router-dom"
 import Dashboard from "./assets/components/AdminDashbard/Dashboard"
 import Login from "./assets/components/LogIn/Login"
-import useFetch from "./assets/components/useFetch"
+
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import ErrorPage from "./assets/components/pages/ErrorPage"
+import DashboardParent from "./assets/components/ParentDashbard/DashboardParent"
 function App() {
   return (
     <>
@@ -34,6 +35,14 @@ function App() {
           element={
             <>
               <ErrorPage to="../" />
+            </>
+          }
+        />
+        <Route
+          path="/parents-portal/*"
+          element={
+            <>
+              <DashboardParent />
             </>
           }
         />

@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react"
 import Avatar from "@mui/material/Avatar"
 import ImageAvatar from "../../Images/webImages/avatar.webp"
-
-import { AuthContext } from "../AdminDashbard/Dashboard"
-function DashboardHeader({ navToggle, setNavToggle, logOut }) {
+import { AuthContext } from "../ParentDashbard/DashboardParent"
+function DashboardHeaderParent({ navToggle, setNavToggle, logOut }) {
   const userProfileData = useContext(AuthContext)
   const [avatarMenu, setAvatarMenu] = useState(false)
 
@@ -72,4 +71,4 @@ function DashboardHeader({ navToggle, setNavToggle, logOut }) {
   )
 }
 
-export default DashboardHeader
+export default DashboardHeaderParent

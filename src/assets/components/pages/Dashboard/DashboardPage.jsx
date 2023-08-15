@@ -1,45 +1,15 @@
 import React, { useContext, useEffect, useRef, useState } from "react"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCar } from "@fortawesome/free-solid-svg-icons"
-import { NavLink, Navigate } from "react-router-dom"
-import ImageWithBlurhashModal from "../../ImageWithBlurhashModal"
 
 import { AuthContext } from "../../AdminDashbard/Dashboard"
-import PageLoader from "../../loaders/pageLoader/PageLoader"
-import useFetch from "../../useFetch"
-import DotMin from "../../loaders/minDotLoader/DotMin"
 
-import { LiveLineChart } from "../../charts/LineChart/LiveLineChart"
 import DashboardStats from "./DashboardStats"
 import { LineChartAdmin } from "../../charts/LineChart/LineChartAdmin"
 import Select from "react-select"
 function DashboardPage() {
   const { token, userId, firstName, lastName } = useContext(AuthContext)
-  const [vehicles, setVehicles] = useState([])
-  const [selectedDevice, setSelectedDevice] = useState(0)
-  const [vehicleFormated, setVehicleFormated] = useState([])
+
   const [month, setMonth] = useState(new Date().getMonth() + 1)
   const [year, setYear] = useState(new Date().getFullYear())
-  const url = `${
-    import.meta.env.VITE_REACT_API_URL
-  }/api/requestData.php?t=vehicles`
-  const { isLoading, isError, data: vehicleData, fetchData } = useFetch(url)
-  useEffect(() => {
-    fetchData(token, setVehicles)
-  }, [])
-
-  useEffect(() => {
-    const newData = vehicles.map((vehicle, index) => {
-      if (index === 0) {
-        setSelectedDevice(vehicle.vehicleID)
-        return { ...vehicle, selectedDevice: true }
-      }
-      return { ...vehicle, selectedDevice: false }
-    })
-    setVehicleFormated(() => {
-      return newData
-    })
-  }, [vehicles])
 
   const optionsMonth = [
     {

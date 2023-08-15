@@ -4,9 +4,11 @@ import { toast } from "react-toastify"
 import { NavLink, Navigate } from "react-router-dom"
 import DotMin from "../loaders/minDotLoader/DotMin"
 import backImage from "../../Images/webImages/womanImage.png"
-function LoginForm() {
+function LoginForm({ activeTab }) {
   const [serverResponse, setServerResponse] = useState([])
-  const url = `${import.meta.env.VITE_REACT_API_URL}/api/login.php`
+  const url = `${import.meta.env.VITE_REACT_API_URL}/api/login.php?t=${
+    activeTab == 0 ? "guardian" : "school"
+  }`
   const [isSubmit, setIsSubmit] = useState(false)
   const { isLoading, isError, data, SubmitData } = useSubmitData(
     url,
@@ -33,10 +35,18 @@ function LoginForm() {
       }
       if (serverResponse.login) {
         if (serverResponse.jwt != "") {
-          localStorage.setItem(
-            "iot-car-tracker",
-            JSON.stringify(serverResponse)
-          )
+          if (activeTab == 1) {
+            localStorage.setItem(
+              "iot-car-tracker",
+              JSON.stringify(serverResponse)
+            )
+          } else {
+            localStorage.setItem(
+              "umuhuza-parent",
+              JSON.stringify(serverResponse)
+            )
+          }
+
           toast.success("Login success", {
             position: "top-right",
             autoClose: 3000,
@@ -65,9 +75,14 @@ function LoginForm() {
 
   return (
     <>
-      {serverResponse.login && serverResponse.jwt != "" && (
-        <Navigate to="../my-portal/dashboard" replace={true} />
-      )}
+      {activeTab}
+      {serverResponse.login &&
+        serverResponse.jwt != "" &&
+        (activeTab == 1 ? (
+          <Navigate to="../my-portal/dashboard" replace={true} />
+        ) : (
+          <Navigate to="../parents-portal/dashboard" replace={true} />
+        ))}
 
       <div className=" w-full  ">
         <div className=" absolute w-[500px] h-[500px] rounded-full overflow-hidden bg-purple-600 -top-[150px] -right-[150px]">
