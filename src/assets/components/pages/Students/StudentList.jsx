@@ -145,7 +145,7 @@ const StudentList = () => {
           altImage="our images"
           blurhash={"LEGbh.9h3Y^ZPXa1wHXQ?sxoIBNg"}
           className=" w-full h-full object-cover aspect-square  rounded-md transition-all duration-300 hover:scale-105 cursor-pointer "
-          parentClassName="w-[50px]   h-full mr-2 "
+          parentClassName="w-[50px]   h-full mr-2 p-1"
         />
       ),
 
@@ -187,7 +187,7 @@ const StudentList = () => {
               const user = usersData.filter((user) => {
                 return user.studentID === row.studentID
               })
-              console.log(user[0])
+
               setSelectedUserDelete(row.studentID)
               setSelectedUser(user[0])
               //alert(0)

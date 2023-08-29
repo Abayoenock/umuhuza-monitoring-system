@@ -55,9 +55,7 @@ export function LineChartAdmin({ year, month, reFetch = true }) {
     }
   }, [year, month])
 
-  //   useEffect(() => {
-  //     console.log(attandanceData)
-  //   }, [attandanceData])
+
 
   const labels = attandanceData.map((data) => data.label)
   const dataChart = {

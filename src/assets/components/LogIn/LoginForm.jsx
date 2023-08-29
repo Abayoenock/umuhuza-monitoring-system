@@ -89,7 +89,7 @@ function LoginForm({ activeTab }) {
           <div className="absolute bg-purple-600 top-0 right-0 w-full h-full bg-opacity-80  "></div>
           .
         </div>
-        <div className="mt-8 bg-white backdrop-blur-sm p-3 py-6 rounded-md bg-opacity-70 border-[1px] border-purple-100 shadow-md">
+        <div className="mt-8 bg-white backdrop-blur-sm p-3 py-6 rounded-md bg-opacity-70 border-[1px] border-purple-100 shadow-md w-full md:w-[80%]  ">
           <div className="mb-2">
             <h2 className="text-2xl font-bold text-purple-600  ">
               Welcome Back

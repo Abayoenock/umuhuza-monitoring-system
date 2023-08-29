@@ -55,10 +55,6 @@ export function LiveLineChart({ deviceID, date, reFetch = false }) {
     }
   }, [deviceID, date])
 
-  useEffect(() => {
-    console.log(vehicleData)
-  }, [vehicleData])
-
   const labels = vehicleData?.labels
   const dataChart = {
     labels,

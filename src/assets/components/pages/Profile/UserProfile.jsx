@@ -138,7 +138,7 @@ function UserProfile({ myCallBack }) {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log("hello")
+
     const form = document.getElementById("profileForm")
     const formData = new FormData(form)
     const data = Object.fromEntries(formData)
@@ -253,7 +253,7 @@ function UserProfile({ myCallBack }) {
             method="post"
             id="profileForm"
             onSubmit={handleSubmit}
-            className=" w-full flex  gap-x-8 gap-y-6  p-2 pt-2   py-8 bg-white bg-opacity-60 backdrop-blur-sm"
+            className=" w-full flex flex-col md:flex-row  gap-x-8 gap-y-6  p-2 pt-2   py-8 bg-white bg-opacity-60 "
           >
             <div className="w-fit ">
               <div className="flex mb-4 w-fit  ">
@@ -314,7 +314,7 @@ function UserProfile({ myCallBack }) {
                 />
               </div>
             </div>
-            <div className=" w-full grid grid-cols-2 gap-x-8 gap-y-6 mt-4">
+            <div className=" w-full grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mt-4">
               <div className="relative z-0 mb-6 w-full group">
                 <input
                   type="text"
@@ -433,7 +433,7 @@ function UserProfile({ myCallBack }) {
           method="post"
           id="passwordForm"
           onSubmit={handleSubmitPassword}
-          className=" relative w-[80%] md:w-1/2  p-4 shadow-lg rounded-md border-[1px] border-purple-100 py-8 bg-white  backdrop-blur-sm "
+          className=" relative w-[80%] md:w-1/2  p-4 shadow-lg rounded-md border-[1px] border-purple-100 py-8 bg-white   "
         >
           <FontAwesomeIcon
             icon={faXmark}

@@ -24,7 +24,7 @@ const useFetch = (url) => {
       }
       // change to response
       const response = await resp.json()
-      // console.log("REPONSE", response)
+    
 
       setData(response)
       state(() => {

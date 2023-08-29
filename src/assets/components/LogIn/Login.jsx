@@ -131,12 +131,38 @@ function Login() {
             </div>
           </div>
 
-          <div className="flex items-center w-full max-w-md px-6  lg:w-[45%] overflow-y-hidden ">
+          <div className="flex items-center w-full px-6  lg:w-[45%] overflow-y-hidden h-screen relative overflow-x-hidden ">
             {/* login form */}
             <Routes>
               <Route path="/" element={<LoginForm activeTab={activeTab} />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route
+                path="/forgot-password"
+                element={<ForgotPassword activeTab={activeTab} />}
+              />
             </Routes>
+
+            <ul className="absolute bottom-0 left-0 flex w-full bg-purple-600  font-semibold md:hidden ">
+              <li
+                className={` w-full h-full p-3  px-4  transition-all duration-300 ${
+                  activeTab == 0
+                    ? "bg-white"
+                    : "  hover:bg-purple-400 hover:bg-opacity-20 hover:backdrop-blur-sm"
+                }   cursor-pointer   `}
+                onClick={() => setActiveTab(0)}
+              >
+                Gurdians
+              </li>
+              <li
+                className={` w-full h-full p-3  px-4 transition-all duration-300 ${
+                  activeTab == 1
+                    ? "bg-white"
+                    : " hover:bg-purple-400 hover:bg-opacity-20 hover:backdrop-blur-sm"
+                }   cursor-pointer   `}
+                onClick={() => setActiveTab(1)}
+              >
+                School
+              </li>
+            </ul>
           </div>
         </div>
       </div>

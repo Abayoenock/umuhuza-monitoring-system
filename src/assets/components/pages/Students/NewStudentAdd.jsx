@@ -1,7 +1,7 @@
-import React, { useState, useRef, useContext } from "react"
+import React, { useState, useRef, useContext, useEffect } from "react"
 import ImageWithBlurhashModal from "../../ImageWithBlurhashModal"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { Routes, Route, Link, NavLink } from "react-router-dom"
+import { Routes, Route, Link, NavLink, useParams } from "react-router-dom"
 import Select from "react-select"
 import fingerPrint from "../../../Lotties/Fingerprint.json"
 import { toast } from "react-toastify"
@@ -13,51 +13,64 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 
 import DotMin from "../../loaders/minDotLoader/DotMin"
-import RwandaSelect from "../../RwandaSelect/RwandaSelect"
 import LottiePlayer from "../../lottiePlayer/LottiePlayer"
+import useFetch from "../../useFetch"
+
 function NewStudentAdd() {
+  const { id } = useParams()
   const { token } = useContext(AuthContext)
 
-  const [selectedImageF, setSelectedImageF] = useState(null)
-  const fileInputRefF = useRef()
-  const [selectedImageM, setSelectedImageM] = useState(null)
-  const fileInputRefM = useRef()
-  const [selectedImageG, setSelectedImageG] = useState(null)
+  const [selectedImage, setSelectedImage] = useState(null)
+  const fileInputRef = useRef()
+
   const [selectKey, setSelectedKey] = useState(0)
-  const fileInputRefG = useRef()
 
   const [checkInputBox, setCheckInputBox] = useState(false)
   const [isSubmit, setIsSubmit] = useState(false)
+  const [fingerWrite, setFingerWrite] = useState(null)
+  const [fingerID, setFingerID] = useState(null)
+  const url = `${import.meta.env.VITE_REACT_API_URL}/api/write_fingerID.php`
+  const { isLoading, isError, data, fetchData } = useFetch(url)
+  const writeFingerFunc = () => {
+    fetchData(token, setFingerWrite)
+  }
+  useEffect(() => {
+    writeFingerFunc()
+  }, [])
 
-  const handleImageChangeF = (event) => {
+  //continously fetch the finger ID
+
+  const urlFingerID = `${
+    import.meta.env.VITE_REACT_API_URL
+  }/api/get_fingerID.php`
+  const {
+    isLoading: isLoadingFingerID,
+    isError: isErrorFingerID,
+    data: dataFingerID,
+    fetchData: fetchFingerID,
+  } = useFetch(urlFingerID)
+  const getFingerID = () => {
+    fetchFingerID(token, setFingerID)
+  }
+  useEffect(() => {
+    setInterval(() => {
+      getFingerID()
+    }, 1000)
+  }, [])
+
+  const handleImageChange = (event) => {
     const file = event.target.files[0]
-    setSelectedImageF(URL.createObjectURL(file))
+    setSelectedImage(URL.createObjectURL(file))
   }
-  const handleResetF = () => {
-    setSelectedImageF(null)
-    fileInputRefF.current.value = null
-  }
-  const handleImageChangeM = (event) => {
-    const file = event.target.files[0]
-    setSelectedImageM(URL.createObjectURL(file))
-  }
-  const handleResetM = () => {
-    setSelectedImageM(null)
-    fileInputRefM.current.value = null
-  }
-  const handleImageChangeG = (event) => {
-    const file = event.target.files[0]
-    setSelectedImageG(URL.createObjectURL(file))
-  }
-  const handleResetG = () => {
-    setSelectedImageG(null)
-    fileInputRefG.current.value = null
+  const handleReset = () => {
+    setSelectedImage(null)
+    fileInputRef.current.value = null
   }
 
   const handleSubmitData = (event) => {
     event.preventDefault()
 
-    const form = document.getElementById("newDriverForm")
+    const form = document.getElementById("newStudentForm")
     const formData = new FormData(form)
     const data = Object.fromEntries(formData)
     setIsSubmit(true)
@@ -66,7 +79,7 @@ function NewStudentAdd() {
         const resp = await fetch(
           `${
             import.meta.env.VITE_REACT_API_URL
-          }/api/requestData.php?t=registerParent`,
+          }/api/requestData.php?t=registerStudent&parentID=${id}`,
           {
             method: "POST",
             headers: {
@@ -105,10 +118,9 @@ function NewStudentAdd() {
             theme: "light",
           })
           form.reset()
-          handleResetF()
-          handleResetM()
-          handleResetG()
+          handleReset()
           setSelectedKey((prev) => prev + 1)
+          writeFingerFunc()
         } else {
           toast.error(response.messages, {
             position: "top-right",
@@ -137,8 +149,8 @@ function NewStudentAdd() {
       setIsSubmit(false)
       // }, 3000)
     }
+
     SubmitData(formData)
-    console.log(data)
   }
 
   const options = [
@@ -169,7 +181,7 @@ function NewStudentAdd() {
       <form
         action=""
         className="w-full   mt-8 self-center border-[1px] border-purple-500 border-dotted  p-3"
-        id="newDriverForm"
+        id="newStudentForm"
         method="POST"
         encType="multipart/form-data"
         onSubmit={() => handleSubmitData(event)}
@@ -183,9 +195,9 @@ function NewStudentAdd() {
               {/* the container for the select image  */}
               <div className="w-fit ">
                 <div className="flex mb-4 w-fit  ">
-                  {!selectedImageF && (
+                  {!selectedImage && (
                     <label
-                      htmlFor="Fatherimage"
+                      htmlFor="studentImage"
                       className=" cursor-pointer transition-all duration-300 hover:bg-purple-100 relative mr-2 w-[200px] h-[200px] border-[1px] border-dashed border-purple-200 flex items-center justify-center flex-col"
                     >
                       {" "}
@@ -199,14 +211,14 @@ function NewStudentAdd() {
                     </label>
                   )}
 
-                  {selectedImageF && (
+                  {selectedImage && (
                     <div className=" relative w-[200px] h-fit border-[1px] border-dashed border-purple-200 p-4 py-2">
                       <div className=" w-full">
                         <h2 className="text-sm font-semibold mb-2 text-gray-500">
                           Image Preview:
                         </h2>
                         <ImageWithBlurhashModal
-                          imageUrl={selectedImageF}
+                          imageUrl={selectedImage}
                           altImage="selected image preview "
                           blurhash={"LEGbh.9h3Y^ZPXa1wHXQ?sxoIBNg"}
                           className=" w-full h-full object-cover aspect-square shadow-xl rounded-md transition-all duration-300 hover:scale-105 cursor-pointer "
@@ -218,7 +230,7 @@ function NewStudentAdd() {
                         <FontAwesomeIcon
                           icon={faTrashCan}
                           title="Remove"
-                          onClick={handleResetF}
+                          onClick={handleReset}
                           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded  cursor-pointer text-xs"
                         />
                       </div>
@@ -227,11 +239,11 @@ function NewStudentAdd() {
 
                   <input
                     type="file"
-                    id="Fatherimage"
-                    onChange={handleImageChangeF}
+                    id="studentImage"
+                    onChange={handleImageChange}
                     className="border border-gray-300 px-2 py-1 hidden"
-                    ref={fileInputRefF}
-                    name="fatherImage"
+                    ref={fileInputRef}
+                    name="studentImage"
                   />
                 </div>
               </div>
@@ -239,8 +251,22 @@ function NewStudentAdd() {
               <div className="w-full pt-2">
                 <div className="w-full flex gap-3 items-center">
                   <div className="w-[250px] relative">
-                    <LottiePlayer src={fingerPrint} loop={true} />
-                    <div className="w-[40px] h-[40px] bg-green-400 text-white absolute top-3 right-3 rounded-full text-xl flex items-center justify-center font-bold ">
+                    <input
+                      type="text"
+                      value={fingerID?.fingerprintID}
+                      name="fingerprintID"
+                      className="absolute invisible"
+                      required
+                    />
+                    <LottiePlayer
+                      src={fingerPrint}
+                      loop={fingerID?.fingerprintID ? false : true}
+                    />
+                    <div
+                      className={`w-[40px] h-[40px] bg-green-400 text-white absolute top-3 right-6 rounded-full text-xl flex items-center justify-center font-bold transition-all duration-300   ${
+                        fingerID?.fingerprintID ? "flex" : "hidden"
+                      } `}
+                    >
                       ✓
                     </div>
                   </div>

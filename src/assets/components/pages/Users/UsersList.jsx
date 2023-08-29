@@ -42,13 +42,10 @@ const UserList = () => {
   }
   useEffect(() => {
     fetchData(token, setUsersData)
-    console.log(usersData)
+
     setIsDataLoading(false)
   }, [])
 
-  useEffect(() => {
-    console.log(usersData)
-  }, [usersData])
   const urlDelete = `${
     import.meta.env.VITE_REACT_API_URL
   }/api/requestData.php?t=delete&tbl=users&col_Name=userID&dataID=${selectedUserDelete}`

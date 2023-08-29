@@ -30,7 +30,7 @@ function DashboardPage() {
             <div className="p-2 bg-purple-200 w-full font-semibold text-[13px]">
               Registered students info
             </div>
-            <div className="w-full grid grid-cols-4 gap-3 ">
+            <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-3 ">
               {studentData?.[0]?.map((student, index) => {
                 return (
                   <Student

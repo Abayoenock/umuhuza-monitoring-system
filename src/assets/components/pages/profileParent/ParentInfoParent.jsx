@@ -184,7 +184,6 @@ function ParentInfoParent({ id }) {
       // }, 3000)
     }
     SubmitData(formData)
-    console.log(data)
   }
 
   return (
@@ -195,8 +194,8 @@ function ParentInfoParent({ id }) {
           <div className="p-2 bg-purple-200 w-full font-semibold text-[13px]">
             Parent Information
           </div>
-          <div className=" mt-2 flex gap-3 w-full">
-            <div className="w-1/2 flex flex-col  gap-1">
+          <div className=" mt-2 flex flex-col md:flex-row gap-3 w-full">
+            <div className="w-full md:w-1/2 flex flex-col  gap-1">
               <div className="p-2 bg-purple-50 border-[1px] border-purple-300 border-dashed w-full font-semibold text-[12px]">
                 Father's Info
               </div>
@@ -324,7 +323,7 @@ function ParentInfoParent({ id }) {
               </div>
             </div>
 
-            <div className="w-1/2 flex flex-col  gap-1">
+            <div className=" w-full md:w-1/2 flex flex-col  gap-1">
               <div className="p-2 bg-purple-50 border-[1px] border-purple-300 border-dashed w-full font-semibold text-[12px]">
                 Mother's Info
               </div>
@@ -452,7 +451,7 @@ function ParentInfoParent({ id }) {
               </div>
             </div>
           </div>
-          <div className=" grid grid-cols-2 gap-3">
+          <div className=" grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="w-full">
               <div className="p-2 bg-purple-200 w-full font-semibold text-[13px]">
                 Guardian Account info
@@ -606,7 +605,7 @@ function ParentInfoParent({ id }) {
               <div className="p-2 bg-purple-200 w-full font-semibold text-[13px]">
                 Address info
               </div>
-              <div className=" grid grid-cols-2 gap-2 mt-3">
+              <div className=" grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
                 {/* select box */}
                 {usersData?.[0]?.province && (
                   <RwandaSelect

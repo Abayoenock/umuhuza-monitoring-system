@@ -46,7 +46,6 @@ function DashboardParent() {
       setJwtExpires(jwt.expireAt)
       fetchData(jwt.jwt, setUserData)
     } else {
-      console.log("no jwt")
       //window.location = "../"
     }
   }

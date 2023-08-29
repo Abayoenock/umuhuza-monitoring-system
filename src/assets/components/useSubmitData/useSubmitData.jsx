@@ -32,7 +32,6 @@ const useSubmitData = (url, token, setServerResponse) => {
       }
       // change to response
       const response = await resp.json()
-      console.log(response)
 
       setData((current) => {
         return [...current, response]

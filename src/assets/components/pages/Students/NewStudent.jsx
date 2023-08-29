@@ -207,7 +207,7 @@ const NewStudent = () => {
               <FontAwesomeIcon icon={faAnglesLeft} className="mr-2" /> students
             </button>{" "}
           </NavLink>
-          <div className=" w-full flex justify-end mr-4 items-center gap-3 mt-4">
+          <div className=" w-full flex flex-col md:flex-row justify-end md:mr-4 mr-1 md:items-center gap-3 mt-4">
             <div className=" bg-purple-100 p-2 text-xs text-gray-800  rounded-md ">
               To add a new student , search by entering the informaton of the
               guardian account for the student , when you finf the guardian ,

@@ -3,9 +3,12 @@ import useSubmitData from "../useSubmitData/useSubmitData"
 import { toast } from "react-toastify"
 import { NavLink, Navigate } from "react-router-dom"
 import DotMin from "../loaders/minDotLoader/DotMin"
-function ForgotPassword() {
+import backImage from "../../Images/webImages/womanImage.png"
+function ForgotPassword({ activeTab }) {
   const [serverResponse, setServerResponse] = useState([])
-  const url = `${import.meta.env.VITE_REACT_API_URL}/api/reset-password.php`
+  const url = `${
+    import.meta.env.VITE_REACT_API_URL
+  }/api/reset-password.php?t=${activeTab}`
   const [isSubmit, setIsSubmit] = useState(false)
   const { isLoading, isError, data, SubmitData } = useSubmitData(
     url,
@@ -59,14 +62,18 @@ function ForgotPassword() {
   return (
     <>
       {serverResponse?.status && <Navigate to="../" replace={true} />}
-
-      <div className="flex-1">
+      <div className=" absolute w-[500px] h-[500px] rounded-full overflow-hidden bg-purple-600 -top-[150px] -right-[150px]">
+        <img src={backImage} className="w-full h-full object-cover " alt="" />
+        <div className="absolute bg-purple-600 top-0 right-0 w-full h-full bg-opacity-80  "></div>
+        .
+      </div>
+      <div className="flex flex-col  justify-center  w-[80%] bg-white z-1 p-3  rounded-md bg-opacity-70 backdrop-blur-sm  border-[1px] border-purple-100 shadow-md ">
         <div className="">
-          <h2 className="text-3xl font-bold text-purple-600  ">
+          <h2 className="text-xl font-bold text-purple-600  ">
             Forgot Password
           </h2>
         </div>
-        <p className=" mt-4 p-3 bg-purple-100 text-purple-500  text-sm">
+        <p className=" mt-4 p-3  text-purple-500  text-sm">
           To reset password , enter the phone number you used while registering
           your account{" "}
         </p>

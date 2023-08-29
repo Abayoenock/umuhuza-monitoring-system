@@ -20,6 +20,9 @@ import DataTable from "react-data-table-component"
 import useFetch from "../../useFetch"
 
 import PageLoader from "../../loaders/pageLoader/PageLoader"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCogs } from "@fortawesome/free-solid-svg-icons"
+import Settings from "./Settings"
 
 const customStyles = {
   rows: {
@@ -49,9 +52,7 @@ const ReportParent = () => {
   const [isDataLoading, setIsDataLoading] = useState(true)
   const [usersData, setUsersData] = useState([])
   const [openDialog, setOpenDialog] = useState(false)
-  const [openDialogLock, setOpenDialogLock] = useState(false)
-  const [selectedUser, setSelectedUser] = useState(null)
-  const [selectedUserDelete, setSelectedUserDelete] = useState(null)
+
   const [startDate, setStartDate] = useState(new Date())
   const transformDate = (date) => {
     if (date) {
@@ -86,16 +87,6 @@ const ReportParent = () => {
 
   const handleCloseDialog = () => {
     setOpenDialog(false)
-  }
-  const handleClickOpenDialog = () => {
-    setOpenDialog(true)
-  }
-
-  const handleCloseDialogLock = () => {
-    setOpenDialogLock(false)
-  }
-  const handleClickOpenDialogLock = () => {
-    setOpenDialogLock(true)
   }
 
   const handleChange = (state) => {
@@ -137,7 +128,8 @@ const ReportParent = () => {
     },
     {
       name: "OutTime",
-      selector: (row) => getTimeDifference(row["outTime"]),
+      selector: (row) =>
+        row["outTime"] == null ? "--------" : getTimeDifference(row["outTime"]),
     },
   ]
   return (
@@ -150,15 +142,21 @@ const ReportParent = () => {
         </div>
       )}
       {!isLoading && (
-        <div className="w-[99%] mt-10 px-8 text-xs border-[1px] border-purple-500 border-dotted m-1">
+        <div className="w-[99%] mt-10 px-8 text-xs border-[1px] border-purple-500 border-dotted m-1 relative">
           <DatePicker
             selected={startDate}
             onChange={(date) => {
               setStartDate(date)
               setSortDate(transformDate(date))
             }}
-            className="border-gray-300 p-3 border-[1px] shadow-sm rounded-sm px-4 bg-purple-50 w-[400px] -translate-y-4 "
+            className="border-gray-300 p-3 border-[1px] shadow-sm rounded-sm px-4 bg-purple-50 w-[200px] md:w-[400px] -translate-y-4 "
           />
+          <button
+            className=" absolute right-2 top-2 p-2 px-3 bg-purple-600 transition-all duration-300 hover:bg-purple-700 text-white font-semibold rounded-md "
+            onClick={() => setOpenDialog(true)}
+          >
+            <FontAwesomeIcon icon={faCogs} /> Settings
+          </button>
           <DataTable
             title=" "
             columns={columns}
@@ -184,10 +182,10 @@ const ReportParent = () => {
           />
 
           <Dialog
-            open={openDialogLock}
+            open={openDialog}
             TransitionComponent={Transition}
             keepMounted
-            onClose={handleCloseDialogLock}
+            onClose={handleCloseDialog}
             aria-describedby="alert-dialog-slide-description"
             sx={{
               color: "#fff",
@@ -198,21 +196,13 @@ const ReportParent = () => {
             maxWidth={"96%"}
           >
             <DialogTitle>
-              {" "}
-              <p className=" font-semibold text-sm text-textColor">{`   ${selectedUser?.firstName}  ${selectedUser?.lastName}'s guardian  account information `}</p>{" "}
+              <span className=" font-semibold text-sm text-textColor">
+                Change the SMS notification settings
+              </span>{" "}
             </DialogTitle>
             <DialogContent>
-              {/* the content to show the parents info */}
-              {/* <ParentInfo id={selectedUser?.guardianID} /> */}
+              <Settings handleCloseDialog={handleCloseDialog} />
             </DialogContent>
-            <DialogActions>
-              <button
-                onClick={handleCloseDialogLock}
-                className="border-none bg-slate-300 p-2 px-3 text-sm font-semibold rounded-sm transition-all duration-300 hover:bg-slate-400 mr-2"
-              >
-                Close
-              </button>
-            </DialogActions>
           </Dialog>
         </div>
       )}
